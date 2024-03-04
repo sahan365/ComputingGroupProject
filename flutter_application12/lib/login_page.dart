@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'healthreminders_page.dart';
+
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class LoginPage extends StatelessWidget {
           children: [
             Image.asset(
               'assets/images/doctor.jpg.avif', //front page image path
-              width: 300,
+              width: 350,
               height: 300,
             ),
             const Text('MyDoc'),
@@ -48,25 +50,43 @@ class LoginPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
+        color:
+            Color.fromARGB(251, 157, 172, 185), // Change bottom app bar color
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: const Icon(Icons.home),
+              icon: const Icon(
+                Icons.home,
+                color: Color.fromARGB(255, 0, 0, 0),
+                size: 30,
+              ),
               onPressed: () {
-                // Navigate to Home
+                // Navigate to Home Page
               },
             ),
             IconButton(
-              icon: const Icon(Icons.notifications),
+              icon: const Icon(
+                Icons.notifications,
+                color: Color.fromARGB(255, 0, 0, 0),
+                size: 30,
+              ),
               onPressed: () {
-                // Navigate to notifications page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HealthRemindersPage()),
+                ); // Navigate to Notifications Page
               },
             ),
             IconButton(
-              icon: const Icon(Icons.settings),
+              icon: const Icon(
+                Icons.settings,
+                color: Color.fromARGB(255, 0, 0, 0),
+                size: 30,
+              ),
               onPressed: () {
-                // Navigate to settings page
+                // Navigate to Settings Page
               },
             ),
           ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'healthreminders_page.dart';
+
 class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,17 +16,17 @@ class SignUpPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/doctor.jpg.avif', //front page image path
-              width: 250,
+              'assets/images/ca3.jpg', //front page image path
+              width: 350,
               height: 250,
             ),
             const Text('MyDoc'),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             TextFormField(
               decoration: const InputDecoration(
                 labelText: 'Email Address',
@@ -62,25 +64,43 @@ class SignUpPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
+        color:
+            Color.fromARGB(251, 157, 172, 185), // Change bottom app bar color
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: const Icon(Icons.home),
+              icon: const Icon(
+                Icons.home,
+                color: Color.fromARGB(255, 0, 0, 0),
+                size: 30,
+              ),
               onPressed: () {
-                // Navigate to Home
+                // Navigate to Home Page
               },
             ),
             IconButton(
-              icon: const Icon(Icons.notifications),
+              icon: const Icon(
+                Icons.notifications,
+                color: Color.fromARGB(255, 0, 0, 0),
+                size: 30,
+              ),
               onPressed: () {
-                // Navigate to notifications page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HealthRemindersPage()),
+                ); // Navigate to Notifications Page
               },
             ),
             IconButton(
-              icon: const Icon(Icons.settings),
+              icon: const Icon(
+                Icons.settings,
+                color: Color.fromARGB(255, 0, 0, 0),
+                size: 30,
+              ),
               onPressed: () {
-                // Navigate to settings page
+                // Navigate to Settings Page
               },
             ),
           ],

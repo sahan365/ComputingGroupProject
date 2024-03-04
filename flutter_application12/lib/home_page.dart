@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'dietandnutrition_page.dart';
 import 'fitnesstracking_page.dart';
 import 'healthdatatracking_page.dart';
@@ -14,17 +15,21 @@ class HomePage extends StatelessWidget {
         title: const Text('MY DOC'),
         titleTextStyle: const TextStyle(
           fontFamily: 'FontMain',
-          color: Color.fromARGB(255, 23, 15, 130),
-          fontSize: 36,
+          color: Color.fromARGB(255, 37, 116, 177),
+          fontSize: 38,
           fontWeight: FontWeight.bold,
         ),
         centerTitle: true,
-        backgroundColor: Color.fromARGB(
-            255, 196, 201, 205), // Change app bar background color
+        backgroundColor: const Color.fromARGB(
+            255, 181, 198, 212), // Change app bar background color
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: const Icon(Icons.menu),
+              icon: const Icon(
+                Icons.menu,
+                color: const Color.fromARGB(255, 0, 0, 0),
+                size: 35,
+              ),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -33,7 +38,11 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.account_circle),
+            icon: const Icon(
+              Icons.account_circle,
+              color: const Color.fromARGB(255, 0, 0, 0),
+              size: 30,
+            ),
             onPressed: () {
               Navigator.push(
                 context,
@@ -42,7 +51,11 @@ class HomePage extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: const Icon(
+              Icons.logout,
+              color: Color.fromARGB(255, 179, 9, 9),
+              size: 30,
+            ),
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/');
             },
@@ -56,7 +69,7 @@ class HomePage extends StatelessWidget {
             const DrawerHeader(
               child: Text('Categories'),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 196, 201, 205),
+                color: Color.fromARGB(255, 181, 198, 212),
               ),
             ),
             ListTile(
@@ -157,15 +170,15 @@ class HomePage extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/456.jpg'),
+                image: AssetImage('assets/images/blue12.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
           ),
           Column(
             children: [
-              // Cover image
-              Image.asset('assets/images/new.jpg'),
+              // Horizontal List
+              _buildHorizontalList(),
               const SizedBox(height: 2),
               // App categories
               Padding(
@@ -229,8 +242,8 @@ class HomePage extends StatelessWidget {
                         const Color.fromARGB(255, 215, 163, 8), () {
                       // Navigate to Sleep Monitoring Page
                     }),
-                    _buildCategory('Emergency & Urgent Care',
-                        Icons.local_hospital, Colors.red, () {
+                    _buildCategory(
+                        'Emergency', Icons.local_hospital, Colors.red, () {
                       // Navigate to Sleep Monitoring Page
                     }),
                   ],
@@ -242,24 +255,40 @@ class HomePage extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         color:
-            Color.fromARGB(255, 196, 201, 205), // Change bottom app bar color
+            Color.fromARGB(251, 157, 172, 185), // Change bottom app bar color
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: const Icon(Icons.home),
+              icon: const Icon(
+                Icons.home,
+                color: Color.fromARGB(255, 0, 0, 0),
+                size: 30,
+              ),
               onPressed: () {
                 // Navigate to Home Page
               },
             ),
             IconButton(
-              icon: const Icon(Icons.notifications),
+              icon: const Icon(
+                Icons.notifications,
+                color: Color.fromARGB(255, 0, 0, 0),
+                size: 30,
+              ),
               onPressed: () {
-                // Navigate to Notifications Page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HealthRemindersPage()),
+                ); // Navigate to Notifications Page
               },
             ),
             IconButton(
-              icon: const Icon(Icons.settings),
+              icon: const Icon(
+                Icons.settings,
+                color: Color.fromARGB(255, 0, 0, 0),
+                size: 30,
+              ),
               onPressed: () {
                 // Navigate to Settings Page
               },
@@ -279,7 +308,7 @@ class HomePage extends StatelessWidget {
           margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(30),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -291,13 +320,69 @@ class HomePage extends StatelessWidget {
                 style: const TextStyle(
                   fontFamily: 'FontMain',
                   color: Colors.white,
-                  fontSize: 14,
+                  fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHorizontalList() {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      height: 265,
+      child: CarouselSlider(
+        options: CarouselOptions(
+          aspectRatio: 2.0,
+          enlargeCenterPage: true,
+          enableInfiniteScroll: true,
+          autoPlay: true,
+        ),
+        items: [
+          'assets/images/ca3.jpg',
+          'assets/images/diet.png',
+          'assets/images/ca2.jpg',
+          'assets/images/cover654.jpg',
+        ].map((item) {
+          return Builder(
+            builder: (BuildContext context) {
+              return Container(
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.circular(20), // Circular border radius
+                ),
+                child: ClipRRect(
+                  borderRadius:
+                      BorderRadius.circular(20), // Circular border radius
+                  child: Image.asset(
+                    item,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              );
+            },
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildListItem(String text) {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      width: 100,
+      color: Colors.blue,
+      child: Center(
+        child: Text(
+          text,
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );
