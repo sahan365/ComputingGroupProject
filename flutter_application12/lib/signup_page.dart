@@ -63,49 +63,6 @@ class SignUpPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color:
-            Color.fromARGB(251, 157, 172, 185), // Change bottom app bar color
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: const Icon(
-                Icons.home,
-                color: Color.fromARGB(255, 0, 0, 0),
-                size: 30,
-              ),
-              onPressed: () {
-                // Navigate to Home Page
-              },
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.notifications,
-                color: Color.fromARGB(255, 0, 0, 0),
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HealthRemindersPage()),
-                ); // Navigate to Notifications Page
-              },
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.settings,
-                color: Color.fromARGB(255, 0, 0, 0),
-                size: 30,
-              ),
-              onPressed: () {
-                // Navigate to Settings Page
-              },
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

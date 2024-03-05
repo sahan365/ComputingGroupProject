@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
 import 'dietandnutrition_page.dart';
 import 'fitnesstracking_page.dart';
 import 'healthdatatracking_page.dart';
@@ -8,6 +10,8 @@ import 'sleepmonitoring_page.dart';
 import 'userprofile_page.dart';
 
 class HomePage extends StatelessWidget {
+  // Add this variable to track the selected index
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,9 +89,19 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => HealthDataTrackingPage()),
-                ); // Navigate to Health Data Tracking
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => HealthDataTrackingPage(),
+                    transitionsBuilder: (_, animation, __, child) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    },
+                  ),
+                );
               },
             ),
             ListTile(
@@ -102,9 +116,19 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => HealthRemindersPage()),
-                ); // Navigate to Health Reminders
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => HealthRemindersPage(),
+                    transitionsBuilder: (_, animation, __, child) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    },
+                  ),
+                );
               },
             ),
             ListTile(
@@ -113,9 +137,19 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => FitnessTrackingPage()),
-                ); // Navigate to Fitness Tracking
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => FitnessTrackingPage(),
+                    transitionsBuilder: (_, animation, __, child) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    },
+                  ),
+                );
               },
             ),
             ListTile(
@@ -124,9 +158,19 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => DietAndNutritionPage()),
-                ); // Navigate to Diet and Nutrition
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => DietAndNutritionPage(),
+                    transitionsBuilder: (_, animation, __, child) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    },
+                  ),
+                );
               },
             ),
             ListTile(
@@ -135,10 +179,19 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => SleepMonitoringPage(),
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => SleepMonitoringPage(),
+                    transitionsBuilder: (_, animation, __, child) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    },
                   ),
-                ); // Navigate to Sleep Monitoring
+                );
               },
             ),
             ListTile(
@@ -253,48 +306,31 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        color:
-            Color.fromARGB(251, 157, 172, 185), // Change bottom app bar color
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: const Icon(
-                Icons.home,
-                color: Color.fromARGB(255, 0, 0, 0),
-                size: 30,
-              ),
-              onPressed: () {
-                // Navigate to Home Page
-              },
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.notifications,
-                color: Color.fromARGB(255, 0, 0, 0),
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HealthRemindersPage()),
-                ); // Navigate to Notifications Page
-              },
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.settings,
-                color: Color.fromARGB(255, 0, 0, 0),
-                size: 30,
-              ),
-              onPressed: () {
-                // Navigate to Settings Page
-              },
-            ),
-          ],
-        ),
+      bottomNavigationBar: CurvedNavigationBar(
+        // Replace BottomAppBar with CurvedNavigationBar
+        backgroundColor: const Color.fromARGB(
+            251, 157, 172, 185), // Change bottom app bar color
+        color: Colors.blue, // Change the background color of the bar items
+        buttonBackgroundColor: const Color.fromARGB(
+            251, 157, 172, 185), // Change the background color of the buttons
+        height: 50, // Adjust the height of the bar
+        items: const <Widget>[
+          Icon(Icons.home, size: 30),
+          Icon(Icons.notifications, size: 30),
+          Icon(Icons.settings, size: 30),
+        ],
+        onTap: (index) {
+          if (index == 0) {
+            // Navigate to Home Page
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HealthRemindersPage()),
+            ); // Navigate to Notifications Page
+          } else if (index == 2) {
+            // Navigate to Settings Page
+          }
+        },
       ),
     );
   }
