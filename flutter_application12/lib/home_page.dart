@@ -10,8 +10,6 @@ import 'sleepmonitoring_page.dart';
 import 'userprofile_page.dart';
 
 class HomePage extends StatelessWidget {
-  // Add this variable to track the selected index
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,19 +17,19 @@ class HomePage extends StatelessWidget {
         title: const Text('MY DOC'),
         titleTextStyle: const TextStyle(
           fontFamily: 'FontMain',
-          color: Color.fromARGB(255, 37, 116, 177),
+          color: Color.fromARGB(255, 199, 164, 106),
           fontSize: 38,
           fontWeight: FontWeight.bold,
         ),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(
-            255, 181, 198, 212), // Change app bar background color
+        backgroundColor:
+            Color.fromARGB(255, 7, 21, 70), // Change app bar background color
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
               icon: const Icon(
                 Icons.menu,
-                color: const Color.fromARGB(255, 0, 0, 0),
+                color: Color.fromARGB(255, 255, 255, 255),
                 size: 35,
               ),
               onPressed: () {
@@ -44,7 +42,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(
               Icons.account_circle,
-              color: const Color.fromARGB(255, 0, 0, 0),
+              color: Color.fromARGB(255, 255, 255, 255),
               size: 30,
             ),
             onPressed: () {
@@ -232,6 +230,17 @@ class HomePage extends StatelessWidget {
             children: [
               // Horizontal List
               _buildHorizontalList(),
+              const SizedBox(height: 1),
+              // Greeting Message
+              const Text(
+                'Hello there! Welcome to MyDoc',
+                style: TextStyle(
+                  fontFamily: 'FontMain',
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                  color: Color.fromARGB(255, 1, 25, 132),
+                ),
+              ),
               const SizedBox(height: 2),
               // App categories
               Padding(
@@ -313,7 +322,7 @@ class HomePage extends StatelessWidget {
         color: Colors.blue, // Change the background color of the bar items
         buttonBackgroundColor: const Color.fromARGB(
             251, 157, 172, 185), // Change the background color of the buttons
-        height: 50, // Adjust the height of the bar
+        height: 60, // Adjust the height of the bar
         items: const <Widget>[
           Icon(Icons.home, size: 30),
           Icon(Icons.notifications, size: 30),
