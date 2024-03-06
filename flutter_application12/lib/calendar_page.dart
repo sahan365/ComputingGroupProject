@@ -34,7 +34,7 @@ class _CalendarPageState extends State<CalendarPage> {
               onDaySelected: (selectedDay, focusedDay) {
                 setState(() {
                   _selectedDay = selectedDay;
-                  _focusedDay = focusedDay; // update `_focusedDay` here as well
+                  _focusedDay = focusedDay;
                 });
               },
             ),
@@ -45,7 +45,6 @@ class _CalendarPageState extends State<CalendarPage> {
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(height: 20),
-              // Add widgets to add events/tasks for the selected day
             ],
           ],
         ),

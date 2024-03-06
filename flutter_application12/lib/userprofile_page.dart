@@ -25,9 +25,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
     String weight = _weightController.text;
     String height = _heightController.text;
     String specialNotes = _specialNotesController.text;
-
-    // Save or update user profile with the entered details
-    // You can implement your logic here to save/update the user profile
   }
 
   @override
@@ -118,7 +115,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   @override
   void dispose() {
-    // Dispose the controllers when the widget is disposed
     _nameController.dispose();
     _ageController.dispose();
     _genderController.dispose();

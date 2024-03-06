@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter_application12/calender_page.dart';
+import 'package:flutter_application12/calendar_page.dart';
 
 import 'dietandnutrition_page.dart';
 import 'fitnesstracking_page.dart';
