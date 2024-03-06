@@ -15,14 +15,14 @@ class LoginPage extends StatelessWidget {
 
       // Display login success message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Login Successful'),
           backgroundColor: Colors.green,
         ),
       );
 
       // Navigate to home
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
@@ -30,7 +30,7 @@ class LoginPage extends StatelessWidget {
     } catch (e) {
       // Show login error message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Login Error: Please check email and password'),
         ),
       );

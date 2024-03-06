@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_application12/calendar_page.dart';
+import 'package:flutter_application12/emergency_page.dart';
+import 'package:flutter_application12/settings_page.dart';
 
 import 'dietandnutrition_page.dart';
 import 'fitnesstracking_page.dart';
@@ -70,96 +72,104 @@ class HomePage extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+            DrawerHeader(
               child: Text('Categories'),
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 4, 53, 93),
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.dashboard),
-              title: const Text('Dashboard'),
+              leading: Icon(
+                Icons.dashboard,
+                color: Colors.blue,
+              ),
+              title: Text('Dashboard'),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            DashboardPage())); // Navigate to Dashboard
+                // Navigate to Dashboard
               },
             ),
             ListTile(
-              leading: const Icon(Icons.timeline),
-              title: const Text('Health Data Tracking'),
+              leading: Icon(
+                Icons.timeline,
+                color: Colors.green,
+              ),
+              title: Text('Health Data Tracking'),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HealthDataTrackingPage()));
+                // Navigate to Health Data Tracking
               },
             ),
             ListTile(
-              leading: const Icon(Icons.notifications),
+              leading: Icon(
+                Icons.notifications,
+                color: Colors.orange,
+              ),
               title: Row(
                 children: [
-                  const Text('Health Reminders'),
-                  const SizedBox(width: 5),
+                  Text('Health Reminders'),
+                  SizedBox(width: 5),
                   _buildUnreadNotificationBadge(), // Unread notification badge
                 ],
               ),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HealthRemindersPage()));
+                // Navigate to Health Reminders
               },
             ),
             ListTile(
-              leading: const Icon(Icons.directions_run),
-              title: const Text('Fitness Tracking'),
+              leading: Icon(
+                Icons.directions_run,
+                color: Colors.deepPurple,
+              ),
+              title: Text('Fitness Tracking'),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => FitnessTrackingPage()));
+                // Navigate to Fitness Tracking
               },
             ),
             ListTile(
-              leading: const Icon(Icons.local_dining),
-              title: const Text('Diet and Nutrition'),
+              leading: Icon(
+                Icons.local_dining,
+                color: Colors.red,
+              ),
+              title: Text('Diet and Nutrition'),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DietAndNutritionPage()));
+                // Navigate to Diet and Nutrition
               },
             ),
             ListTile(
-              leading: const Icon(Icons.nights_stay),
-              title: const Text('Sleep Monitoring'),
+              leading: Icon(
+                Icons.nights_stay,
+                color: Colors.indigo,
+              ),
+              title: Text('Sleep Monitoring'),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SleepMonitoringPage()));
+                // Navigate to Sleep Monitoring
               },
             ),
             ListTile(
-              leading: const Icon(Icons.receipt),
-              title: const Text('My Reports'),
+              leading: Icon(
+                Icons.receipt,
+                color: Colors.teal,
+              ),
+              title: Text('My Reports'),
               onTap: () {
                 // Navigate to My Reports
               },
             ),
             ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Doctor List'),
+              leading: Icon(
+                Icons.person,
+                color: Colors.purple,
+              ),
+              title: Text('Doctor List'),
               onTap: () {
                 // Navigate to Doctor List
               },
             ),
             ListTile(
-              leading: const Icon(Icons.local_hospital),
-              title: const Text('Emergency & Urgent Care'),
+              leading: Icon(
+                Icons.local_hospital,
+                color: Colors.deepOrange,
+              ),
+              title: Text('Emergency & Urgent Care'),
               onTap: () {
                 // Navigate to Emergency & Urgent Care
               },
@@ -261,7 +271,12 @@ class HomePage extends StatelessWidget {
                     }),
                     _buildCategory(
                         'Emergency', Icons.local_hospital, Colors.red, () {
-                      // Navigate to Sleep Monitoring Page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EmergencyPage(),
+                        ),
+                      ); // Navigate to Emergency Page
                     }),
                   ],
                 ),
@@ -295,7 +310,10 @@ class HomePage extends StatelessWidget {
               MaterialPageRoute(builder: (context) => CalendarPage()),
             ); // Navigate to Calender Page
           } else if (index == 2) {
-            // Navigate to Settings Page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsPage()),
+            ); // Navigate to Settings Page
           }
         },
       ),
