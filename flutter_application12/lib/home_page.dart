@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter_application12/dashboard_page.dart';
+import 'package:flutter_application12/calender_page.dart';
 
 import 'dietandnutrition_page.dart';
 import 'fitnesstracking_page.dart';
@@ -9,7 +9,7 @@ import 'healthdatatracking_page.dart';
 import 'healthreminders_page.dart';
 import 'sleepmonitoring_page.dart';
 import 'userprofile_page.dart';
-import 'settings_page.dart';
+import 'dashboard_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -288,14 +288,14 @@ class HomePage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HealthRemindersPage()),
-            ); // Navigate to Home Page
+            ); // Navigate to Notifications Page
           } else if (index == 1) {
-            // Navigate to Notifications Page
-          } else if (index == 2) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => settings_page()),
-            ); // Navigate to Settings Page
+              MaterialPageRoute(builder: (context) => CalendarPage()),
+            ); // Navigate to Calender Page
+          } else if (index == 2) {
+            // Navigate to Settings Page
           }
         },
       ),
