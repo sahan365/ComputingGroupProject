@@ -24,13 +24,6 @@ class FrontPage extends StatelessWidget {
               width: 350,
               height: 350,
             ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/home');
-              },
-              child: const Text('Login as Guest'),
-            ),
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
@@ -41,7 +34,7 @@ class FrontPage extends StatelessWidget {
               },
               child: const Text('Login as User'),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 30),
             TextButton(
               onPressed: () {
                 Navigator.push(

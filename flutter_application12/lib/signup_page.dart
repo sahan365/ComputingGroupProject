@@ -21,7 +21,8 @@ class SignUpPage extends StatelessWidget {
     } catch (e) {
       // Registration failed, show error message
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Registration failed: $e'),
+        content: Text('Registration failed.Try again'),
+        backgroundColor: Colors.red,
       ));
     }
   }

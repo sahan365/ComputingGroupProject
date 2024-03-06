@@ -31,8 +31,7 @@ class LoginPage extends StatelessWidget {
       // Show login error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Login Error: $e\nPlease check email and password'),
-          backgroundColor: Colors.red,
+          content: Text('Login Error: Please check email and password'),
         ),
       );
     }

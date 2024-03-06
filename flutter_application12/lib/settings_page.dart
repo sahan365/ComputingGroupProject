@@ -5,7 +5,7 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'),
+        title: Text('Settings'),
         centerTitle: true,
       ),
       body: Stack(

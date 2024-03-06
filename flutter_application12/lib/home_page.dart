@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter_application12/dashboard_page.dart';
 
 import 'dietandnutrition_page.dart';
 import 'fitnesstracking_page.dart';
@@ -8,6 +9,7 @@ import 'healthdatatracking_page.dart';
 import 'healthreminders_page.dart';
 import 'sleepmonitoring_page.dart';
 import 'userprofile_page.dart';
+import 'settings_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -71,14 +73,18 @@ class HomePage extends StatelessWidget {
             const DrawerHeader(
               child: Text('Categories'),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 181, 198, 212),
+                color: Color.fromARGB(255, 4, 53, 93),
               ),
             ),
             ListTile(
               leading: const Icon(Icons.dashboard),
               title: const Text('Dashboard'),
               onTap: () {
-                // Navigate to Dashboard
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DashboardPage())); // Navigate to Dashboard
               },
             ),
             ListTile(
@@ -86,20 +92,9 @@ class HomePage extends StatelessWidget {
               title: const Text('Health Data Tracking'),
               onTap: () {
                 Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => HealthDataTrackingPage(),
-                    transitionsBuilder: (_, animation, __, child) {
-                      return SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(1.0, 0.0),
-                          end: Offset.zero,
-                        ).animate(animation),
-                        child: child,
-                      );
-                    },
-                  ),
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HealthDataTrackingPage()));
               },
             ),
             ListTile(
@@ -113,20 +108,9 @@ class HomePage extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => HealthRemindersPage(),
-                    transitionsBuilder: (_, animation, __, child) {
-                      return SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(1.0, 0.0),
-                          end: Offset.zero,
-                        ).animate(animation),
-                        child: child,
-                      );
-                    },
-                  ),
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HealthRemindersPage()));
               },
             ),
             ListTile(
@@ -134,20 +118,9 @@ class HomePage extends StatelessWidget {
               title: const Text('Fitness Tracking'),
               onTap: () {
                 Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => FitnessTrackingPage(),
-                    transitionsBuilder: (_, animation, __, child) {
-                      return SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(1.0, 0.0),
-                          end: Offset.zero,
-                        ).animate(animation),
-                        child: child,
-                      );
-                    },
-                  ),
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FitnessTrackingPage()));
               },
             ),
             ListTile(
@@ -155,20 +128,9 @@ class HomePage extends StatelessWidget {
               title: const Text('Diet and Nutrition'),
               onTap: () {
                 Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => DietAndNutritionPage(),
-                    transitionsBuilder: (_, animation, __, child) {
-                      return SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(1.0, 0.0),
-                          end: Offset.zero,
-                        ).animate(animation),
-                        child: child,
-                      );
-                    },
-                  ),
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DietAndNutritionPage()));
               },
             ),
             ListTile(
@@ -176,20 +138,9 @@ class HomePage extends StatelessWidget {
               title: const Text('Sleep Monitoring'),
               onTap: () {
                 Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => SleepMonitoringPage(),
-                    transitionsBuilder: (_, animation, __, child) {
-                      return SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(1.0, 0.0),
-                          end: Offset.zero,
-                        ).animate(animation),
-                        child: child,
-                      );
-                    },
-                  ),
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SleepMonitoringPage()));
               },
             ),
             ListTile(
@@ -233,7 +184,7 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 1),
               // Greeting Message
               const Text(
-                'Hello there! Welcome to MyDoc',
+                'Hello there! Welcome to MyDoc...',
                 style: TextStyle(
                   fontFamily: 'FontMain',
                   fontSize: 20,
@@ -251,7 +202,11 @@ class HomePage extends StatelessWidget {
                   children: [
                     _buildCategory('Dashboard', Icons.dashboard, Colors.blue,
                         () {
-                      // Navigate to Dashboard Page
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  DashboardPage())); // Navigate to Dashboard Page
                     }),
                     _buildCategory(
                         'Health Data Tracking', Icons.timeline, Colors.green,
@@ -317,27 +272,30 @@ class HomePage extends StatelessWidget {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         // Replace BottomAppBar with CurvedNavigationBar
-        backgroundColor: const Color.fromARGB(
-            251, 157, 172, 185), // Change bottom app bar color
+        backgroundColor:
+            Color.fromARGB(255, 207, 190, 210), // Change bottom app bar color
         color: Colors.blue, // Change the background color of the bar items
         buttonBackgroundColor: const Color.fromARGB(
             251, 157, 172, 185), // Change the background color of the buttons
         height: 60, // Adjust the height of the bar
         items: const <Widget>[
-          Icon(Icons.home, size: 30),
           Icon(Icons.notifications, size: 30),
+          Icon(Icons.event, size: 30),
           Icon(Icons.settings, size: 30),
         ],
         onTap: (index) {
           if (index == 0) {
-            // Navigate to Home Page
-          } else if (index == 1) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HealthRemindersPage()),
-            ); // Navigate to Notifications Page
+            ); // Navigate to Home Page
+          } else if (index == 1) {
+            // Navigate to Notifications Page
           } else if (index == 2) {
-            // Navigate to Settings Page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => settings_page()),
+            ); // Navigate to Settings Page
           }
         },
       ),

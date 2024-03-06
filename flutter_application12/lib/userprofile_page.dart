@@ -6,133 +6,127 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  String? name;
-  int? age;
-  String? gender;
-  String? contactDetails;
-  String? healthGoals;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _contactDetailsController =
+      TextEditingController();
+  final TextEditingController _healthGoalsController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _specialNotesController = TextEditingController();
+
+  void _saveProfile() {
+    String name = _nameController.text;
+    int age = int.tryParse(_ageController.text) ?? 0;
+    String gender = _genderController.text;
+    String contactDetails = _contactDetailsController.text;
+    String healthGoals = _healthGoalsController.text;
+    String weight = _weightController.text;
+    String height = _heightController.text;
+    String specialNotes = _specialNotesController.text;
+
+    // Save or update user profile with the entered details
+    // You can implement your logic here to save/update the user profile
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Profile'),
-        titleTextStyle: const TextStyle(
-            fontFamily: 'FontMain',
-            color: Color.fromARGB(255, 172, 29, 29),
-            fontSize: 20,
-            fontWeight: FontWeight.bold),
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage(
-                  'assets/images/Man.jpg.avif'), //User's profile image
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Name',
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('assets/images/Man.jpg.avif'),
               ),
-              onChanged: (value) {
-                setState(() {
-                  name = value;
-                });
-              },
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Age',
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Name',
+                ),
               ),
-              keyboardType: TextInputType.number,
-              onChanged: (value) {
-                setState(() {
-                  age = int.tryParse(value);
-                });
-              },
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Gender',
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _ageController,
+                decoration: const InputDecoration(
+                  labelText: 'Age',
+                ),
+                keyboardType: TextInputType.number,
               ),
-              onChanged: (value) {
-                setState(() {
-                  gender = value;
-                });
-              },
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Contact Details',
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _genderController,
+                decoration: const InputDecoration(
+                  labelText: 'Gender',
+                ),
               ),
-              onChanged: (value) {
-                setState(() {
-                  contactDetails = value;
-                });
-              },
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Health Goals',
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _contactDetailsController,
+                decoration: const InputDecoration(
+                  labelText: 'Contact Details',
+                ),
               ),
-              onChanged: (value) {
-                setState(() {
-                  healthGoals = value;
-                });
-              },
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Weight',
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _healthGoalsController,
+                decoration: const InputDecoration(
+                  labelText: 'Health Goals',
+                ),
               ),
-              onChanged: (value) {
-                setState(() {
-                  contactDetails = value;
-                });
-              },
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Height',
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _weightController,
+                decoration: const InputDecoration(
+                  labelText: 'Weight',
+                ),
               ),
-              onChanged: (value) {
-                setState(() {
-                  contactDetails = value;
-                });
-              },
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Special Notes',
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _heightController,
+                decoration: const InputDecoration(
+                  labelText: 'Height',
+                ),
               ),
-              onChanged: (value) {
-                setState(() {
-                  contactDetails = value;
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Save user profile information
-              },
-              child: const Text('Save'),
-            ),
-          ],
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _specialNotesController,
+                decoration: const InputDecoration(
+                  labelText: 'Special Notes',
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _saveProfile,
+                child: const Text('Save'),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Dispose the controllers when the widget is disposed
+    _nameController.dispose();
+    _ageController.dispose();
+    _genderController.dispose();
+    _contactDetailsController.dispose();
+    _healthGoalsController.dispose();
+    _weightController.dispose();
+    _heightController.dispose();
+    _specialNotesController.dispose();
+    super.dispose();
   }
 }
