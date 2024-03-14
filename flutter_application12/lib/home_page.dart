@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_application12/calendar_page.dart';
+import 'package:flutter_application12/doctor_list.dart';
 import 'package:flutter_application12/emergency_page.dart';
 import 'package:flutter_application12/settings_page.dart';
 
@@ -11,7 +12,6 @@ import 'healthdatatracking_page.dart';
 import 'healthreminders_page.dart';
 import 'sleepmonitoring_page.dart';
 import 'userprofile_page.dart';
-import 'dashboard_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -43,19 +43,6 @@ class HomePage extends StatelessWidget {
           },
         ),
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.account_circle,
-              color: Color.fromARGB(255, 255, 255, 255),
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => UserProfilePage()),
-              ); // Navigate to user profile page
-            },
-          ),
           IconButton(
             icon: const Icon(
               Icons.logout,
@@ -187,104 +174,112 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          Column(
-            children: [
-              // Horizontal List
-              _buildHorizontalList(),
-              const SizedBox(height: 1),
-              // Greeting Message
-              const Text(
-                'Hello there! Welcome to MyDoc...',
-                style: TextStyle(
-                  fontFamily: 'FontMain',
-                  fontSize: 20,
-                  fontWeight: FontWeight.normal,
-                  color: Color.fromARGB(255, 1, 25, 132),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                // Horizontal List
+                _buildHorizontalList(),
+                const SizedBox(height: 1),
+                // Greeting Message
+                const Text(
+                  'Hello there! Welcome to MyDoc...',
+                  style: TextStyle(
+                    fontFamily: 'FontMain',
+                    fontSize: 20,
+                    fontWeight: FontWeight.normal,
+                    color: Color.fromARGB(255, 1, 25, 132),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 2),
-              // App categories
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: GridView.count(
-                  crossAxisCount: 3,
-                  shrinkWrap: true,
-                  children: [
-                    _buildCategory('Dashboard', Icons.dashboard, Colors.blue,
-                        () {
-                      Navigator.push(
+                const SizedBox(height: 2),
+                // App categories
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: GridView.count(
+                    crossAxisCount: 3,
+                    shrinkWrap: true,
+                    children: [
+                      _buildCategory('Dashboard', Icons.dashboard, Colors.blue,
+                          () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    UserProfilePage())); // Navigate to Dashboard Page
+                      }),
+                      _buildCategory(
+                          'Health Data Tracking', Icons.timeline, Colors.green,
+                          () {
+                        // Navigate to Health Data Tracking Page
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HealthDataTrackingPage()));
+                      }),
+                      _buildCategory('Health Reminders', Icons.notifications,
+                          Colors.deepOrange, () {
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  DashboardPage())); // Navigate to Dashboard Page
-                    }),
-                    _buildCategory(
-                        'Health Data Tracking', Icons.timeline, Colors.green,
-                        () {
-                      // Navigate to Health Data Tracking Page
-                      Navigator.push(
+                              builder: (context) => HealthRemindersPage()),
+                        ); // Navigate to Health Reminders Page
+                      }),
+                      _buildCategory('Fitness Tracking', Icons.directions_run,
+                          const Color.fromARGB(255, 150, 158, 58), () {
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HealthDataTrackingPage()));
-                    }),
-                    _buildCategory('Health Reminders', Icons.notifications,
-                        Colors.deepOrange, () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HealthRemindersPage()),
-                      ); // Navigate to Health Reminders Page
-                    }),
-                    _buildCategory('Fitness Tracking', Icons.directions_run,
-                        const Color.fromARGB(255, 150, 158, 58), () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FitnessTrackingPage()),
-                      ); // Navigate to Fitness Tracking Page
-                    }),
-                    _buildCategory(
-                        'Diet and Nutrition', Icons.local_dining, Colors.purple,
-                        () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DietAndNutritionPage()),
-                      ); // Navigate to Diet and Nutrition Page
-                    }),
-                    _buildCategory('Sleep Monitoring', Icons.nights_stay,
-                        const Color.fromARGB(255, 50, 55, 55), () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SleepMonitoringPage(),
-                        ),
-                      ); // Navigate to Sleep Monitoring Page
-                    }),
-                    _buildCategory('My Reports', Icons.receipt, Colors.indigo,
-                        () {
-                      // Navigate to Sleep Monitoring Page
-                    }),
-                    _buildCategory('Doctor List', Icons.person,
-                        const Color.fromARGB(255, 215, 163, 8), () {
-                      // Navigate to Sleep Monitoring Page
-                    }),
-                    _buildCategory(
-                        'Emergency', Icons.local_hospital, Colors.red, () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EmergencyPage(),
-                        ),
-                      ); // Navigate to Emergency Page
-                    }),
-                  ],
+                              builder: (context) => FitnessTrackingPage()),
+                        ); // Navigate to Fitness Tracking Page
+                      }),
+                      _buildCategory(
+                          'Diet and Nutrition', Icons.local_dining, Colors.purple,
+                          () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DietAndNutritionPage()),
+                        ); // Navigate to Diet and Nutrition Page
+                      }),
+                      _buildCategory('Sleep Monitoring', Icons.nights_stay,
+                          const Color.fromARGB(255, 50, 55, 55), () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SleepMonitoringPage(),
+                          ),
+                        ); // Navigate to Sleep Monitoring Page
+                      }),
+                      _buildCategory('My Reports', Icons.receipt, Colors.indigo,
+                          () {
+                        // Navigate to Sleep Monitoring Page
+                      }),
+                      _buildCategory('Doctor List', Icons.person,
+                          const Color.fromARGB(255, 215, 163, 8), () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DoctorList(),
+                          ),
+                        );
+                      }),
+                      _buildCategory(
+                          'Emergency', Icons.local_hospital, Colors.red, () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => emergencyPage(),
+                          ),
+                        ); // Navigate to Emergency Page
+                      }),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
+      
       bottomNavigationBar: CurvedNavigationBar(
         // Replace BottomAppBar with CurvedNavigationBar
         backgroundColor:
