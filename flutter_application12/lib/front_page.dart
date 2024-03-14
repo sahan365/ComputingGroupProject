@@ -20,11 +20,12 @@ class FrontPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/doctor.jpg.avif', // logo
+              'assets/images/doctor123.jpg', // logo
               width: 350,
               height: 350,
             ),
             const SizedBox(height: 10),
+            
             TextButton(
               onPressed: () {
                 Navigator.push(
