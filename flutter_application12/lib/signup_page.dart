@@ -42,59 +42,61 @@ class SignUpPage extends StatelessWidget {
             fontWeight: FontWeight.bold),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/ca3.jpg', //front page image path
-              width: 350,
-              height: 250,
-            ),
-            const Text('MyDoc'),
-            const SizedBox(height: 20),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Email Address',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/ca3.jpg', //front page image path
+                width: 350,
+                height: 250,
               ),
-              onChanged: (value) {
-                email = value; // Update email variable
-              },
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Password',
+              const Text('MyDoc'),
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Email Address',
+                ),
+                onChanged: (value) {
+                  email = value; // Update email variable
+                },
               ),
-              obscureText: true,
-              onChanged: (value) {
-                password = value; // Update password variable
-              },
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Birthday',
+              const SizedBox(height: 10),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                ),
+                obscureText: true,
+                onChanged: (value) {
+                  password = value; // Update password variable
+                },
               ),
-              keyboardType: TextInputType.datetime,
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Phone Number',
+              const SizedBox(height: 10),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Birthday',
+                ),
+                keyboardType: TextInputType.datetime,
               ),
-              keyboardType: TextInputType.phone,
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                // Call the register method when the button is pressed
-                _registerWithEmailAndPassword(context, email, password);
-              },
-              child: const Text('Register'),
-            ),
-          ],
+              const SizedBox(height: 10),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                ),
+                keyboardType: TextInputType.phone,
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  // Call the register method when the button is pressed
+                  _registerWithEmailAndPassword(context, email, password);
+                },
+                child: const Text('Register'),
+              ),
+            ],
+          ),
         ),
       ),
     );
