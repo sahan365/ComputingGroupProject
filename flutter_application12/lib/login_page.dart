@@ -44,48 +44,50 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('User Login'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/doctor.jpg.avif', //front page image path
-              width: 350,
-              height: 300,
-            ),
-            const Text('MyDoc'),
-            const SizedBox(height: 20),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Email Address',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/doctor123.jpg', //front page image path
+                width: 350,
+                height: 300,
               ),
-              onChanged: (value) {
-                email = value; // Update email variable
-              },
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Password',
+              const Text('MyDoc'),
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Email Address',
+                ),
+                onChanged: (value) {
+                  email = value; // Update email variable
+                },
               ),
-              obscureText: true,
-              onChanged: (value) {
-                password = value; // Update password variable
-              },
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Call the login method when the button is pressed
-                _loginWithEmailAndPassword(context, email, password);
-              },
-              child: const Text('Login'),
-            ),
-          ],
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                ),
+                obscureText: true,
+                onChanged: (value) {
+                  password = value; // Update password variable
+                },
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Call the login method when the button is pressed
+                  _loginWithEmailAndPassword(context, email, password);
+                },
+                child: const Text('Login'),
+              ),
+            ],
+          ),
         ),
       ),
     );
