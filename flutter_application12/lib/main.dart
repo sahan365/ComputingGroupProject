@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'front_page.dart';
 import 'home_page.dart';
@@ -10,6 +11,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  FirebaseFirestore.instance.settings=const Settings(
+    persistenceEnabled: true,
+  );
   runApp(MyApp());
 }
 

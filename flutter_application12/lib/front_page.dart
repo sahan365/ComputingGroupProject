@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application12/admin/login_page_admin.dart';
+import 'package:flutter_application12/doctor/login_page_doctor.dart';
 import 'login_page.dart';
 import 'signup_page.dart';
 
@@ -35,7 +37,27 @@ class FrontPage extends StatelessWidget {
               },
               child: const Text('Login as User'),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPageDoctor()),
+                );
+              },
+              child: const Text('Login as Doctor'),
+            ),
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPageAdmin()),
+                );
+              },
+              child: const Text('Login as Admin'),
+            ),
+            const SizedBox(height: 10),
             TextButton(
               onPressed: () {
                 Navigator.push(
