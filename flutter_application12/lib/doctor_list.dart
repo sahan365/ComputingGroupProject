@@ -1,9 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application12/admin/admindashboard.dart';
 import 'package:flutter_application12/admin/connection.dart';
 import 'package:flutter_application12/calendar_page.dart';
 import 'package:flutter_application12/healthreminders_page.dart';
+import 'package:flutter_application12/home_page.dart';
 import 'package:flutter_application12/services/database_service.dart';
 import 'package:flutter_application12/settings_page.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -47,7 +47,7 @@ class _DoctorListState extends State<DoctorList> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AdminDashboard(),
+                      builder: (context) => HomePage(),
                     ));
               },
             );
@@ -118,7 +118,6 @@ class _DoctorListState extends State<DoctorList> {
           itemCount: doctors.length,
           itemBuilder: (context, index) {
             DoctorLog doctor = doctors[index].data();
-            String doctorId = doctors[index].id;
             if (doctor.available != true) {
               return SizedBox.shrink(); // Hide the ListTile if doctor is not available
             }

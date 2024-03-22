@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_application12/calendar_page.dart';
 import 'package:flutter_application12/doctor_list.dart';
 import 'package:flutter_application12/emergency_page.dart';
+import 'package:flutter_application12/login_page.dart';
 import 'package:flutter_application12/settings_page.dart';
 
 import 'dietandnutrition_page.dart';
@@ -21,13 +22,12 @@ class HomePage extends StatelessWidget {
         title: const Text('MY DOC'),
         titleTextStyle: const TextStyle(
           fontFamily: 'FontMain',
-          color: Color.fromARGB(255, 199, 164, 106),
+          color: Colors.white,
           fontSize: 38,
           fontWeight: FontWeight.bold,
         ),
         centerTitle: true,
-        backgroundColor:
-            Colors.white, // Change app bar background color
+        backgroundColor: Colors.blue, // Change app bar background color
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
@@ -50,7 +50,11 @@ class HomePage extends StatelessWidget {
               size: 30,
             ),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/');
+              Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    LoginPage()));
             },
           ),
         ],
@@ -166,14 +170,7 @@ class HomePage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/blue12.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          
           SingleChildScrollView(
             child: Column(
               children: [
@@ -213,7 +210,8 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HealthDataTrackingPage()));
+                                builder: (context) =>
+                                    HealthDataTrackingPage()));
                       }),
                       _buildCategory('Health Reminders', Icons.notifications,
                           Colors.deepOrange, () {
@@ -231,9 +229,8 @@ class HomePage extends StatelessWidget {
                               builder: (context) => FitnessTrackingPage()),
                         ); // Navigate to Fitness Tracking Page
                       }),
-                      _buildCategory(
-                          'Diet and Nutrition', Icons.local_dining, Colors.purple,
-                          () {
+                      _buildCategory('Diet and Nutrition', Icons.local_dining,
+                          Colors.purple, () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -279,11 +276,9 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      
       bottomNavigationBar: CurvedNavigationBar(
         // Replace BottomAppBar with CurvedNavigationBar
-        backgroundColor:
-            Colors.white, // Change bottom app bar color
+        backgroundColor: Colors.white, // Change bottom app bar color
         color: Colors.blue, // Change the background color of the bar items
         buttonBackgroundColor: const Color.fromARGB(
             251, 157, 172, 185), // Change the background color of the buttons
@@ -321,6 +316,7 @@ class HomePage extends StatelessWidget {
       onTap: onTap,
       child: GridTile(
         child: Container(
+          padding: EdgeInsets.all(5),
           margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: color,
@@ -371,6 +367,14 @@ class HomePage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 5.0),
                 decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    )
+                  ],
                   borderRadius:
                       BorderRadius.circular(20), // Circular border radius
                 ),
