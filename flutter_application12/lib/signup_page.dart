@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application12/login_page.dart';
 
 class SignUpPage extends StatelessWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void _registerWithEmailAndPassword(
       BuildContext context, String email, String password) async {
     try {
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
       // Registration successful, navigate to the next page
       Navigator.push(
         context,

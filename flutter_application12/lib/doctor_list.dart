@@ -1,13 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application12/admin/todo.dart';
+import 'package:flutter_application12/admin/admindashboard.dart';
+import 'package:flutter_application12/admin/connection.dart';
 import 'package:flutter_application12/calendar_page.dart';
 import 'package:flutter_application12/healthreminders_page.dart';
-import 'package:flutter_application12/home_page.dart';
 import 'package:flutter_application12/services/database_service.dart';
 import 'package:flutter_application12/settings_page.dart';
-import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DoctorList extends StatefulWidget {
   @override
@@ -20,7 +19,6 @@ class _DoctorListState extends State<DoctorList> {
   TextEditingController categoryController = TextEditingController();
   bool isAvailable = false;
 
-  final TextEditingController _textEditingController = TextEditingController();
   final DatabaseService _databaseService = DatabaseService();
 
   @override
@@ -31,7 +29,7 @@ class _DoctorListState extends State<DoctorList> {
         titleTextStyle: const TextStyle(
           fontFamily: 'FontMain',
           color: Colors.black,
-          fontSize: 38,
+          fontSize: 30,
           fontWeight: FontWeight.bold,
         ),
         centerTitle: true,
@@ -49,7 +47,7 @@ class _DoctorListState extends State<DoctorList> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HomePage(),
+                      builder: (context) => AdminDashboard(),
                     ));
               },
             );
@@ -57,14 +55,6 @@ class _DoctorListState extends State<DoctorList> {
         ),
       ),
       body: _buildUI(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _displayTextInputDialog,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
       bottomNavigationBar: CurvedNavigationBar(
         // Replace BottomAppBar with CurvedNavigationBar
         backgroundColor: Colors.white, // Change bottom app bar color
@@ -101,96 +91,72 @@ class _DoctorListState extends State<DoctorList> {
 
   Widget _buildUI() {
     return SafeArea(
-        child: Column(
-      children: [
-        _messagesListView(),
-      ],
-    ));
+        child: SingleChildScrollView(
+          child: Column(
+                children: [
+          _messagesListView(),
+                ],
+              ),
+        ));
   }
 
   Widget _messagesListView() {
-    return SizedBox(
-      height: MediaQuery.sizeOf(context).height * 0.80,
-      width: MediaQuery.sizeOf(context).width,
-      child: StreamBuilder(
-        stream: _databaseService.getTodos(),
-        builder: (context, snapshot) {
-          List todos = snapshot.data?.docs ?? [];
-          if (todos.isEmpty) {
-            return Center(
-              child: Text("add a todo!"),
-            );
-          }
-          print(todos);
-          return ListView.builder(
-              itemCount: todos.length,
-              itemBuilder: (context, index) {
-                Todo todo = todos[index].data();
-                String todoId = todos[index].id;
-                return Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 10,
-                  ),
-                  child: ListTile(
-                    tileColor: Theme.of(context).colorScheme.primaryContainer,
-                    title: Text(todo.task),
-                    subtitle: Text(
-                      DateFormat("dd-MM-yyyy h:mm a").format(
-                        todo.updatedOn.toDate(),
-                      ),
-                    ),
-                    trailing: Checkbox(
-                      value: todo.isDone,
-                      onChanged: (value) {
-                        Todo updatedTodo = todo.copyWith(
-                          isDone: !todo.isDone,
-                          updatedOn: Timestamp.now(),
-                        );
-                        _databaseService.updateTodo(todoId, updatedTodo);
-                      },
-                    ),
-                    onLongPress: () {
-                      _databaseService.deleteTodo(todoId);
-                    },
-                  ),
-                );
-              });
-        },
-      ),
-    );
-  }
+  return SizedBox(
+    height: MediaQuery.sizeOf(context).height * 0.80,
+    width: MediaQuery.sizeOf(context).width,
+    child: StreamBuilder(
+      stream: _databaseService.getDoctorLogs1(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-  void _displayTextInputDialog() async {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Add a todo"),
-          content: TextField(
-            controller: _textEditingController,
-            decoration: InputDecoration(hintText: "todo..."),
-          ),
-          actions: <Widget>[
-            MaterialButton(
-              onPressed: () {
-                Todo todo = Todo(
-                  task: _textEditingController.text,
-                  isDone: false,
-                  createdOn: Timestamp.now(),
-                  updatedOn: Timestamp.now(),
-                );
-                _databaseService.addTodo(todo);
-                Navigator.pop(context);
-                _textEditingController.clear();
-              },
-              color: Theme.of(context).colorScheme.primary,
-              textColor: Colors.white,
-              child: const Text("Ok"),
-            )
-          ],
+        List doctors = snapshot.data?.docs ?? [];
+        return ListView.builder(
+          itemCount: doctors.length,
+          itemBuilder: (context, index) {
+            DoctorLog doctor = doctors[index].data();
+            String doctorId = doctors[index].id;
+            if (doctor.available != true) {
+              return SizedBox.shrink(); // Hide the ListTile if doctor is not available
+            }
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 10,
+              ),
+              child: ListTile(
+                tileColor: Theme.of(context).colorScheme.primaryContainer,
+                title: Text(doctor.name),
+                subtitle: Text(
+                  doctor.category,
+                ),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    _makePhoneCall(doctor.phone);
+                  },
+                  child: Text("Call Doctor"),
+                ),
+              ),
+            );
+          },
         );
       },
-    );
+    ),
+  );
+}
+
+
+  void _makePhoneCall(String number) async {
+    String telScheme = 'tel:$number';
+    if (await canLaunch(telScheme)) {
+      await launch(telScheme);
+    } else {
+      throw 'Could not launch $telScheme';
+    }
   }
+
+  
 }

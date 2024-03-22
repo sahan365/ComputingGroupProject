@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application12/home_page.dart';
 
 class LoginPage extends StatelessWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> _loginWithEmailAndPassword(
       BuildContext context, String email, String password) async {
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
 
       // Display login success message
       ScaffoldMessenger.of(context).showSnackBar(

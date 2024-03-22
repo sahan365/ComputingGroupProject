@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application12/admin/admindashboard.dart';
-import 'package:flutter_application12/admin/todo.dart';
-import 'package:flutter_application12/doctor/docdashboard.dart';
+import 'package:flutter_application12/admin/connection.dart';
 import 'package:flutter_application12/services/database_service.dart';
 
 class LoginPageAdmin extends StatelessWidget {

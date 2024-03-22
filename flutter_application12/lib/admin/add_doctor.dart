@@ -1,13 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application12/admin/todo.dart';
+import 'package:flutter_application12/admin/admindashboard.dart';
+import 'package:flutter_application12/admin/connection.dart';
 import 'package:flutter_application12/calendar_page.dart';
 import 'package:flutter_application12/healthreminders_page.dart';
-import 'package:flutter_application12/home_page.dart';
 import 'package:flutter_application12/services/database_service.dart';
 import 'package:flutter_application12/settings_page.dart';
-import 'package:intl/intl.dart';
 
 class AddDoctor extends StatefulWidget {
   @override
@@ -20,7 +18,6 @@ class _AddDoctorState extends State<AddDoctor> {
   TextEditingController categoryController = TextEditingController();
   bool isAvailable = false;
 
-  final TextEditingController _textEditingController = TextEditingController();
   final DatabaseService _databaseService = DatabaseService();
 
   @override
@@ -49,7 +46,7 @@ class _AddDoctorState extends State<AddDoctor> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HomePage(),
+                      builder: (context) => AdminDashboard(),
                     ));
               },
             );
@@ -57,6 +54,14 @@ class _AddDoctorState extends State<AddDoctor> {
         ),
       ),
       body: _buildUI(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _displayTextInputDialog,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
       bottomNavigationBar: CurvedNavigationBar(
         // Replace BottomAppBar with CurvedNavigationBar
         backgroundColor: Colors.white, // Change bottom app bar color
@@ -93,11 +98,13 @@ class _AddDoctorState extends State<AddDoctor> {
 
   Widget _buildUI() {
     return SafeArea(
-        child: Column(
-      children: [
-        _messagesListView(),
-      ],
-    ));
+        child: SingleChildScrollView(
+          child: Column(
+                children: [
+          _messagesListView(),
+                ],
+              ),
+        ));
   }
 
   Widget _messagesListView() {
@@ -105,48 +112,133 @@ class _AddDoctorState extends State<AddDoctor> {
       height: MediaQuery.sizeOf(context).height * 0.80,
       width: MediaQuery.sizeOf(context).width,
       child: StreamBuilder(
-        stream: _databaseService.getDoctorLogs(), // Fetch doctor logs
+        stream: _databaseService
+            .getDoctorLogs1(), // Fetch doctor logs instead of todos
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          List<DoctorLog> doctors = (snapshot.data ?? [])
-              .cast<DoctorLog>(); // Cast the snapshot data to List<DoctorLog>
+          List doctors = snapshot.data?.docs ?? [];
           if (doctors.isEmpty) {
             return Center(
-              child: Text("No doctors available"),
+              child: Text("No doctors available!"),
             );
           }
           return ListView.builder(
             itemCount: doctors.length,
             itemBuilder: (context, index) {
-              DoctorLog doctor = doctors[index];
-              return ListTile(
-                tileColor: Theme.of(context).colorScheme.primaryContainer,
-                title: Text(doctor.name),
-                subtitle: Text(doctor.category),
-                trailing: Checkbox(
-                  value: doctor.available,
-                  onChanged: (value) async {
-                    setState(() {
-                      doctor.available = value ?? false;
-                    });
-                    try {
-                      await _databaseService.updateDoctorAvailability(doctor);
-                    } catch (e) {
-                      print("Error updating doctor availability: $e");
-                      // Handle error
-                    }
-                  },
+              DoctorLog doctor = doctors[index].data();
+              String doctorId = doctors[index].id;
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 10,
+                ),
+                child: ListTile(
+                  tileColor: Theme.of(context).colorScheme.primaryContainer,
+                  title: Text(doctor.name),
+                  subtitle: Text(
+                    doctor.category,
+                  ),
+                  trailing: Checkbox(
+                    value: doctor.available,
+                    onChanged: (value) {
+                      DoctorLog updatedDoctor = doctor.copyWith(
+                        available: value!,
+                      );
+                      _databaseService.updateDoctor(doctorId, updatedDoctor);
+                    },
+                  ),
+                  onLongPress: () {
+                      _databaseService.deleteDoctor(doctorId);
+                    },
                 ),
               );
             },
           );
         },
       ),
+    );
+  }
+
+  void _displayTextInputDialog() async {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController categoryController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    TextEditingController phoneController = TextEditingController();
+
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Add a Doctor"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(hintText: "Doctor's Name"),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: categoryController,
+                decoration: InputDecoration(hintText: "Category"),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: emailController,
+                decoration: InputDecoration(hintText: "email"),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: passwordController,
+                decoration: InputDecoration(hintText: "Password"),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: phoneController,
+                decoration: InputDecoration(hintText: "Phone number"),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            MaterialButton(
+              onPressed: () {
+                if (nameController.text.isEmpty ||
+                    emailController.text.isEmpty ||
+                    categoryController.text.isEmpty ||
+                    passwordController.text.isEmpty || phoneController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('fill all fields!'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }else{
+                  DoctorLog doctor = DoctorLog(
+                  name: nameController.text,
+                  category: categoryController.text,
+                  available: false,
+                  email: emailController.text,
+                  password: passwordController.text,
+                  phone: phoneController.text,
+                  // Assuming other fields like email, password, and availability are set elsewhere
+                );
+                _databaseService.AddDoctor(doctor);
+                Navigator.pop(context);
+                nameController.clear();
+                categoryController.clear();
+                emailController.clear();
+                passwordController.clear();
+                phoneController.clear();
+                }
+                
+              },
+              color: Theme.of(context).colorScheme.primary,
+              textColor: Colors.white,
+              child: Text("Ok"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

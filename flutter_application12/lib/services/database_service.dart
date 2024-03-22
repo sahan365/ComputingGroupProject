@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application12/admin/todo.dart';
+import 'package:flutter_application12/admin/connection.dart';
 
 const String TODO_COLLECTION_REF = "todos";
 const String DOCTORLOG_COLLECTION_REF = "doctorlog";
@@ -9,7 +9,8 @@ class DatabaseService {
   final _firestore = FirebaseFirestore.instance;
 
   late final CollectionReference _todosRef;
-  late final CollectionReference _doctorlogRef;
+  late final CollectionReference _doctorlogRef1;
+  late final CollectionReference _doctorlogRef2;
   late final CollectionReference _adminlogRef;
 
   DatabaseService() {
@@ -19,7 +20,13 @@ class DatabaseService {
             ),
         toFirestore: (todo, _) => todo.toJson());
 
-    _doctorlogRef = _firestore.collection(DOCTORLOG_COLLECTION_REF);
+    _doctorlogRef1 = _firestore.collection(DOCTORLOG_COLLECTION_REF).withConverter<DoctorLog>(
+        fromFirestore: (snapshots, _) => DoctorLog.fromJson(
+              snapshots.data()!,
+            ),
+        toFirestore: (doctorLog, _) => doctorLog.toJson());
+
+    _doctorlogRef2 = _firestore.collection(DOCTORLOG_COLLECTION_REF);
 
     _adminlogRef = _firestore.collection(ADMINLOG_COLLECTION_REF);
   }
@@ -27,7 +34,7 @@ class DatabaseService {
   // Fetch doctor logs from Firestore
   Future<List<DoctorLog>> fetchDoctorLogs() async {
     try {
-      QuerySnapshot querySnapshot = await _doctorlogRef.get();
+      QuerySnapshot querySnapshot = await _doctorlogRef2.get();
       return querySnapshot.docs
           .map((doc) => DoctorLog.fromJson(doc.data() as Map<String, dynamic>))
           .toList();
@@ -54,7 +61,7 @@ class DatabaseService {
 
   //get doctor logs as a stream
   Stream<List<DoctorLog>> getDoctorLogs() {
-    return _doctorlogRef.snapshots().map((snapshot) => snapshot.docs
+    return _doctorlogRef2.snapshots().map((snapshot) => snapshot.docs
         .map((doc) => DoctorLog.fromJson(doc.data() as Map<String, dynamic>))
         .toList());
   }
@@ -70,11 +77,19 @@ class DatabaseService {
   Stream<QuerySnapshot> getTodos() {
     return _todosRef.snapshots();
   }
+
+   Stream<QuerySnapshot> getDoctorLogs1() {
+    return _doctorlogRef1.snapshots();
+  }
   //get
   
 
   void addTodo(Todo todo) async {
     _todosRef.add(todo);
+  }
+
+  void AddDoctor(DoctorLog doctorLog) async {
+    _doctorlogRef1.add(doctorLog);
   }
 
   void updateTodo(String todoId, Todo todo) {
@@ -85,14 +100,14 @@ class DatabaseService {
     _todosRef.doc(todoId).delete();
   }
 
-  Future<void> updateDoctorAvailability(DoctorLog doctor) async {
-  try {
-    await _doctorlogRef.doc(doctor.email).update({'available': doctor.available});
-  } catch (e) {
-    print("Error updating doctor availability: $e");
-    throw Exception("Error updating doctor availability: $e"); // Rethrow the exception with more details
+  void deleteDoctor(String doctorId) {
+    _doctorlogRef1.doc(doctorId).delete();
   }
-}
+
+  // Update doctor availability in Firestore
+  void updateDoctor(String doctorId, DoctorLog updatedDoctor) {
+    _doctorlogRef1.doc(doctorId).update(updatedDoctor.toJson());
+  }
 
 
 }

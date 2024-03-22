@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_application12/admin/add_doctor.dart';
+import 'package:flutter_application12/admin/login_page_admin.dart';
 import 'package:flutter_application12/calendar_page.dart';
 import 'package:flutter_application12/healthdatatracking_page.dart';
 import 'package:flutter_application12/healthreminders_page.dart';
 import 'package:flutter_application12/settings_page.dart';
-import 'package:flutter_application12/userprofile_page.dart';
 
 class AdminDashboard extends StatelessWidget {
   @override
@@ -32,7 +32,11 @@ class AdminDashboard extends StatelessWidget {
               size: 30,
             ),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/');
+               Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    LoginPageAdmin()));
             },
           ),
         ],
