@@ -84,4 +84,15 @@ class DatabaseService {
   void deleteTodo(String todoId) {
     _todosRef.doc(todoId).delete();
   }
+
+  Future<void> updateDoctorAvailability(DoctorLog doctor) async {
+  try {
+    await _doctorlogRef.doc(doctor.email).update({'available': doctor.available});
+  } catch (e) {
+    print("Error updating doctor availability: $e");
+    throw Exception("Error updating doctor availability: $e"); // Rethrow the exception with more details
+  }
+}
+
+
 }

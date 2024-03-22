@@ -4,6 +4,7 @@ import 'package:flutter_application12/calendar_page.dart';
 import 'package:flutter_application12/healthreminders_page.dart';
 import 'package:flutter_application12/home_page.dart';
 import 'package:flutter_application12/settings_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class emergencyPage extends StatelessWidget {
   @override
@@ -70,8 +71,7 @@ class emergencyPage extends StatelessWidget {
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          // Implement emergency functionality
-                          print('emergency call button pressed');
+                          _makePhoneCall('1919'); // Replace with your specific number
                         },
                         style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.all(0.0),
@@ -138,4 +138,14 @@ class emergencyPage extends StatelessWidget {
       ),
     );
   }
+
+  void _makePhoneCall(String number) async {
+    String telScheme = 'tel:$number';
+    if (await canLaunch(telScheme)) {
+      await launch(telScheme);
+    } else {
+      throw 'Could not launch $telScheme';
+    }
+  }
+
 }

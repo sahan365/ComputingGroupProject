@@ -486,7 +486,7 @@ packages:
     source: hosted
     version: "6.2.5"
   url_launcher_android:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: url_launcher_android
       sha256: d4ed0711849dd8e33eb2dd69c25db0d0d3fdc37e0a62e629fe32f57a22db2745
@@ -494,7 +494,7 @@ packages:
     source: hosted
     version: "6.3.0"
   url_launcher_ios:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: url_launcher_ios
       sha256: "9149d493b075ed740901f3ee844a38a00b33116c7c5c10d7fb27df8987fb51d5"

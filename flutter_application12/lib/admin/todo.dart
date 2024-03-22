@@ -49,11 +49,15 @@ class DoctorLog {
   String name;
   String email;
   String password;
+  String category;
+  bool available;
 
   DoctorLog({
     required this.name,
     required this.email,
     required this.password,
+    required this.category,
+    required this.available,
   });
 
   DoctorLog.fromJson(Map<String, Object?> json)
@@ -61,17 +65,23 @@ class DoctorLog {
           name: json['name']! as String,
           email: json['email']! as String,
           password: json['password']! as String,
+          category: json['category']! as String,
+          available: json['available']! as bool,
         );
 
   DoctorLog copyWith({
     String? name,
     String? email,
     String? password,
+    String? category,
+    bool? available,
   }) {
     return DoctorLog(
       name: name ?? this.name,
       email: email ?? this.email,
       password: password ?? this.password,
+      category: category ?? this.category,
+      available: available ?? this.available,
     );
   }
 
@@ -80,6 +90,8 @@ class DoctorLog {
       'name': name,
       'email': email,
       'password': password,
+      'category': category,
+      'available': available,
     };
   }
 }

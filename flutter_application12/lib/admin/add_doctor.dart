@@ -1,12 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application12/admin/todo.dart';
+import 'package:flutter_application12/calendar_page.dart';
+import 'package:flutter_application12/healthreminders_page.dart';
+import 'package:flutter_application12/home_page.dart';
+import 'package:flutter_application12/services/database_service.dart';
+import 'package:flutter_application12/settings_page.dart';
+import 'package:intl/intl.dart';
 
 class AddDoctor extends StatefulWidget {
-  const AddDoctor({super.key});
-
   @override
-  State<AddDoctor> createState() => _AddDoctorState();
+  _AddDoctorState createState() => _AddDoctorState();
 }
 
 class _AddDoctorState extends State<AddDoctor> {
@@ -15,29 +20,8 @@ class _AddDoctorState extends State<AddDoctor> {
   TextEditingController categoryController = TextEditingController();
   bool isAvailable = false;
 
-  addDoctor(
-      String name, String phone, String category, bool Availability) async {
-    if (name == "" || phone == "") {
-      
-    } else {
-      FirebaseFirestore.instance
-          .collection("Doctor")
-          .doc(AddDoctor as String?)
-          .set({
-        "name": name,
-        "phone": phone,
-        "category": category,
-        "availability": Availability,
-      }).then((value) {
-         ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('data inserted succesfully!'),
-          backgroundColor: Colors.green,
-        ),
-      );
-      });
-    }
-  }
+  final TextEditingController _textEditingController = TextEditingController();
+  final DatabaseService _databaseService = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +30,8 @@ class _AddDoctorState extends State<AddDoctor> {
         title: const Text('Add Doctor'),
         titleTextStyle: const TextStyle(
           fontFamily: 'FontMain',
-          color: Color.fromARGB(255, 199, 164, 106),
-          fontSize: 38,
+          color: Colors.black,
+          fontSize: 30,
           fontWeight: FontWeight.bold,
         ),
         centerTitle: true,
@@ -57,182 +41,22 @@ class _AddDoctorState extends State<AddDoctor> {
           builder: (BuildContext context) {
             return IconButton(
               icon: const Icon(
-                Icons.menu,
+                Icons.arrow_back,
                 color: Colors.black,
-                size: 35,
+                size: 30,
               ),
               onPressed: () {
-                Scaffold.of(context).openDrawer();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                    ));
               },
             );
           },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Color.fromARGB(255, 179, 9, 9),
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/');
-            },
-          ),
-        ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              child: Text('Categories'),
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 4, 53, 93),
-              ),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.dashboard,
-                color: Colors.blue,
-              ),
-              title: Text('Dashboard'),
-              onTap: () {
-                // Navigate to Dashboard
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.timeline,
-                color: Colors.green,
-              ),
-              title: Text('Health Data Tracking'),
-              onTap: () {
-                // Navigate to Health Data Tracking
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.notifications,
-                color: Colors.orange,
-              ),
-              title: Row(
-                children: [
-                  Text('Health Reminders'),
-                  SizedBox(width: 5),
-                  // Unread notification badge
-                ],
-              ),
-              onTap: () {
-                // Navigate to Health Reminders
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.directions_run,
-                color: Colors.deepPurple,
-              ),
-              title: Text('Fitness Tracking'),
-              onTap: () {
-                // Navigate to Fitness Tracking
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.local_dining,
-                color: Colors.red,
-              ),
-              title: Text('Diet and Nutrition'),
-              onTap: () {
-                // Navigate to Diet and Nutrition
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.nights_stay,
-                color: Colors.indigo,
-              ),
-              title: Text('Sleep Monitoring'),
-              onTap: () {
-                // Navigate to Sleep Monitoring
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.receipt,
-                color: Colors.teal,
-              ),
-              title: Text('My Reports'),
-              onTap: () {
-                // Navigate to My Reports
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.person,
-                color: Colors.purple,
-              ),
-              title: Text('Doctor List'),
-              onTap: () {
-                // Navigate to Doctor List
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.local_hospital,
-                color: Colors.deepOrange,
-              ),
-              title: Text('Emergency & Urgent Care'),
-              onTap: () {
-                // Navigate to Emergency & Urgent Care
-              },
-            ),
-          ],
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(labelText: 'Name'),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: phoneNumberController,
-              decoration: InputDecoration(labelText: 'Phone Number'),
-              keyboardType: TextInputType.phone,
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: categoryController,
-              decoration: InputDecoration(labelText: 'Category'),
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              children: [
-                Text('Availability'),
-                Switch(
-                  value: isAvailable,
-                  onChanged: (value) {
-                    setState(() {
-                      isAvailable = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                addDoctor(nameController.text.toString(), phoneNumberController.text.toString(), categoryController.text.toString(),isAvailable);
-              },
-              child: Text('Submit'),
-            ),
-          ],
-        ),
-      ),
+      body: _buildUI(),
       bottomNavigationBar: CurvedNavigationBar(
         // Replace BottomAppBar with CurvedNavigationBar
         backgroundColor: Colors.white, // Change bottom app bar color
@@ -245,7 +69,83 @@ class _AddDoctorState extends State<AddDoctor> {
           Icon(Icons.event, size: 30),
           Icon(Icons.settings, size: 30),
         ],
-        onTap: (index) {},
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HealthRemindersPage()),
+            ); // Navigate to Notifications Page
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CalendarPage()),
+            ); // Navigate to Calender Page
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsPage()),
+            ); // Navigate to Settings Page
+          }
+        },
+      ),
+    );
+  } //class
+
+  Widget _buildUI() {
+    return SafeArea(
+        child: Column(
+      children: [
+        _messagesListView(),
+      ],
+    ));
+  }
+
+  Widget _messagesListView() {
+    return SizedBox(
+      height: MediaQuery.sizeOf(context).height * 0.80,
+      width: MediaQuery.sizeOf(context).width,
+      child: StreamBuilder(
+        stream: _databaseService.getDoctorLogs(), // Fetch doctor logs
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          List<DoctorLog> doctors = (snapshot.data ?? [])
+              .cast<DoctorLog>(); // Cast the snapshot data to List<DoctorLog>
+          if (doctors.isEmpty) {
+            return Center(
+              child: Text("No doctors available"),
+            );
+          }
+          return ListView.builder(
+            itemCount: doctors.length,
+            itemBuilder: (context, index) {
+              DoctorLog doctor = doctors[index];
+              return ListTile(
+                tileColor: Theme.of(context).colorScheme.primaryContainer,
+                title: Text(doctor.name),
+                subtitle: Text(doctor.category),
+                trailing: Checkbox(
+                  value: doctor.available,
+                  onChanged: (value) async {
+                    setState(() {
+                      doctor.available = value ?? false;
+                    });
+                    try {
+                      await _databaseService.updateDoctorAvailability(doctor);
+                    } catch (e) {
+                      print("Error updating doctor availability: $e");
+                      // Handle error
+                    }
+                  },
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
