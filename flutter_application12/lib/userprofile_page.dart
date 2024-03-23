@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserProfilePage extends StatefulWidget {
   @override
@@ -6,6 +9,19 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+
+   File? _imageFile;
+
+   Future<void> _getImageFromGallery() async {
+    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
@@ -40,10 +56,16 @@ class _UserProfilePageState extends State<UserProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/images/Man.jpg.avif'),
-              ),
+              CircleAvatar(
+              radius: 80,
+              backgroundImage: _imageFile != null ? FileImage(_imageFile!) : null,
+              child: _imageFile == null ? Icon(Icons.person, size: 80) : null,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _getImageFromGallery,
+              child: Text('Select Image'),
+            ),
               const SizedBox(height: 20),
               TextFormField(
                 controller: _nameController,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_application12/admin/add_doctor.dart';
@@ -21,9 +22,8 @@ class AdminDashboard extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
         centerTitle: true,
-        backgroundColor:
-            Colors.white, // Change app bar background color
-        
+        backgroundColor: Colors.white, // Change app bar background color
+
         actions: [
           IconButton(
             icon: const Icon(
@@ -32,19 +32,14 @@ class AdminDashboard extends StatelessWidget {
               size: 30,
             ),
             onPressed: () {
-               Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    LoginPageAdmin()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginPageAdmin()));
             },
           ),
         ],
       ),
-      
       body: Stack(
         children: [
-          
           SingleChildScrollView(
             child: Column(
               children: [
@@ -65,14 +60,11 @@ class AdminDashboard extends StatelessWidget {
                 // App categories
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: 
-                  GridView.count(
+                  child: GridView.count(
                     crossAxisCount: 3,
                     shrinkWrap: true,
                     children: [
-                      _buildCategory(
-                          'Add Doctor', Icons.add, Colors.blue,
-                          () {
+                      _buildCategory('Add Doctor', Icons.add, Colors.blue, () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -100,6 +92,31 @@ class AdminDashboard extends StatelessWidget {
                     ],
                   ),
                 ),
+                Container(
+                  height: 200,
+                  child: PieChart(
+                    PieChartData(
+                      sections: [
+                        PieChartSectionData(
+                          value: 20,
+                          title: 'internet',
+                          showTitle: true,
+                          color: Colors.red,
+                          radius: 70,
+                        ),
+                        PieChartSectionData(
+                          value: 25,
+                          title: 'internet',
+                          showTitle: true,
+                          color: Colors.blue,
+                          radius: 70,
+                        )
+                      ],
+                    ),
+                    
+                  ),
+                  
+                )
               ],
             ),
           ),
@@ -107,8 +124,7 @@ class AdminDashboard extends StatelessWidget {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         // Replace BottomAppBar with CurvedNavigationBar
-        backgroundColor:
-            Colors.white, // Change bottom app bar color
+        backgroundColor: Colors.white, // Change bottom app bar color
         color: Colors.blue, // Change the background color of the bar items
         buttonBackgroundColor: const Color.fromARGB(
             251, 157, 172, 185), // Change the background color of the buttons
@@ -146,6 +162,7 @@ class AdminDashboard extends StatelessWidget {
       onTap: onTap,
       child: GridTile(
         child: Container(
+          padding: EdgeInsets.all(5),
           margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: color,
