@@ -12,7 +12,6 @@ import 'fitnesstracking_page.dart';
 import 'healthdatatracking_page.dart';
 import 'healthreminders_page.dart';
 import 'sleepmonitoring_page.dart';
-import 'userprofile_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -170,7 +169,6 @@ class HomePage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          
           SingleChildScrollView(
             child: Column(
               children: [
@@ -195,14 +193,7 @@ class HomePage extends StatelessWidget {
                     crossAxisCount: 3,
                     shrinkWrap: true,
                     children: [
-                      _buildCategory('Dashboard', Icons.dashboard, Colors.blue,
-                          () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    UserProfilePage())); // Navigate to Dashboard Page
-                      }),
+                      
                       _buildCategory(
                           'Health Data Tracking', Icons.timeline, Colors.green,
                           () {
@@ -234,7 +225,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DietAndNutritionPage()),
+                              builder: (context) => DietNutritionApp()),
                         ); // Navigate to Diet and Nutrition Page
                       }),
                       _buildCategory('Sleep Monitoring', Icons.nights_stay,

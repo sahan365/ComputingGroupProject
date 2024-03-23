@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_application12/admin/add_doctor.dart';
+import 'package:flutter_application12/admin/connection.dart';
 import 'package:flutter_application12/admin/login_page_admin.dart';
 import 'package:flutter_application12/calendar_page.dart';
 import 'package:flutter_application12/healthdatatracking_page.dart';
@@ -57,56 +58,53 @@ class AdminDashboard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                // App categories
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    shrinkWrap: true,
-                    children: [
-                      _buildCategory('Add Doctor', Icons.add, Colors.blue, () {
-                        Navigator.push(
+                ElevatedButton(
+                        onPressed: () {
+                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    AddDoctor())); // Navigate to Dashboard Page
-                      }),
-                      _buildCategory(
-                          'Health Data Tracking', Icons.timeline, Colors.green,
-                          () {
-                        // Navigate to Health Data Tracking Page
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    HealthDataTrackingPage()));
-                      }),
-                      _buildCategory('Health Reminders', Icons.notifications,
-                          Colors.deepOrange, () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HealthRemindersPage()),
-                        ); // Navigate to Health Reminders Page
-                      }),
-                    ],
-                  ),
-                ),
+                                    AddDoctor()));
+                        },
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(0.0),
+                            backgroundColor: Colors.blue,
+                            fixedSize: Size(250, 100),
+                            elevation: 15,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "Add Doctor ",
+                              style:
+                                  TextStyle(fontSize: 25, color: Colors.white),
+                            ),
+                            Icon(
+                              Icons.local_hospital,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                SizedBox(height: 40,),
                 Container(
                   height: 200,
                   child: PieChart(
                     PieChartData(
                       sections: [
                         PieChartSectionData(
-                          value: 20,
-                          title: 'internet',
+                          value: 70,
+                          title: "Client",
                           showTitle: true,
-                          color: Colors.red,
+                          color: Colors.green,
                           radius: 70,
                         ),
                         PieChartSectionData(
-                          value: 25,
-                          title: 'internet',
+                          value: 20,
+                          title: 'Doctor',
                           showTitle: true,
                           color: Colors.blue,
                           radius: 70,
@@ -122,71 +120,7 @@ class AdminDashboard extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        // Replace BottomAppBar with CurvedNavigationBar
-        backgroundColor: Colors.white, // Change bottom app bar color
-        color: Colors.blue, // Change the background color of the bar items
-        buttonBackgroundColor: const Color.fromARGB(
-            251, 157, 172, 185), // Change the background color of the buttons
-        height: 60, // Adjust the height of the bar
-        items: const <Widget>[
-          Icon(Icons.notifications, size: 30),
-          Icon(Icons.event, size: 30),
-          Icon(Icons.settings, size: 30),
-        ],
-        onTap: (index) {
-          if (index == 0) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HealthRemindersPage()),
-            ); // Navigate to Notifications Page
-          } else if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CalendarPage()),
-            ); // Navigate to Calender Page
-          } else if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsPage()),
-            ); // Navigate to Settings Page
-          }
-        },
-      ),
-    );
-  }
-
-  Widget _buildCategory(
-      String title, IconData icon, Color color, void Function()? onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: GridTile(
-        child: Container(
-          padding: EdgeInsets.all(5),
-          margin: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 40, color: Colors.white),
-              const SizedBox(height: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontFamily: 'FontMain',
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      ),
+     
     );
   }
 

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter_application12/calendar_page.dart';
-import 'package:flutter_application12/healthdatatracking_page.dart';
-import 'package:flutter_application12/healthreminders_page.dart';
-import 'package:flutter_application12/settings_page.dart';
-import 'package:flutter_application12/userprofile_page.dart';
+import 'package:flutter_application12/admin/add_doctor.dart';
+import 'package:flutter_application12/admin/login_page_admin.dart';
 
 class DoctorDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Doctor Dashboard'),
+        title: const Text('Admin Dashboard'),
         titleTextStyle: const TextStyle(
           fontFamily: 'FontMain',
           color: Color.fromARGB(255, 199, 164, 106),
@@ -20,9 +17,8 @@ class DoctorDashboard extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
         centerTitle: true,
-        backgroundColor:
-            Color.fromARGB(255, 7, 21, 70), // Change app bar background color
-        
+        backgroundColor: Colors.white, // Change app bar background color
+
         actions: [
           IconButton(
             icon: const Icon(
@@ -31,22 +27,14 @@ class DoctorDashboard extends StatelessWidget {
               size: 30,
             ),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/');
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginPageAdmin()));
             },
           ),
         ],
       ),
-      
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/blue12.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
           SingleChildScrollView(
             child: Column(
               children: [
@@ -63,41 +51,59 @@ class DoctorDashboard extends StatelessWidget {
                     color: Color.fromARGB(255, 1, 25, 132),
                   ),
                 ),
-                const SizedBox(height: 2),
-                // App categories
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    shrinkWrap: true,
-                    children: [
-                      _buildCategory(
-                          'view requests', Icons.document_scanner, Colors.blue,
-                          () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    UserProfilePage())); // Navigate to Dashboard Page
-                      }),
-                      _buildCategory(
-                          'Health Data Tracking', Icons.timeline, Colors.green,
-                          () {
-                        // Navigate to Health Data Tracking Page
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    HealthDataTrackingPage()));
-                      }),
-                      _buildCategory('Health Reminders', Icons.notifications,
-                          Colors.deepOrange, () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HealthRemindersPage()),
-                        ); // Navigate to Health Reminders Page
-                      }),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    //function
+                  },
+                  style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(0.0),
+                      backgroundColor: Colors.blue,
+                      fixedSize: Size(300, 100),
+                      elevation: 15,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "View Appontments ",
+                        style: TextStyle(fontSize: 25, color: Colors.white),
+                      ),
+                      Icon(
+                        Icons.document_scanner,
+                        size: 40,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    //function
+                  },
+                  style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(0.0),
+                      backgroundColor: Colors.green,
+                      fixedSize: Size(300, 100),
+                      elevation: 15,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Send Prescription  ",
+                        style: TextStyle(fontSize: 25, color: Colors.white),
+                      ),
+                      Icon(
+                        Icons.send,
+                        size: 40,
+                        color: Colors.white,
+                      ),
                     ],
                   ),
                 ),
@@ -105,71 +111,6 @@ class DoctorDashboard extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        // Replace BottomAppBar with CurvedNavigationBar
-        backgroundColor:
-            Color.fromARGB(255, 207, 190, 210), // Change bottom app bar color
-        color: Colors.blue, // Change the background color of the bar items
-        buttonBackgroundColor: const Color.fromARGB(
-            251, 157, 172, 185), // Change the background color of the buttons
-        height: 60, // Adjust the height of the bar
-        items: const <Widget>[
-          Icon(Icons.notifications, size: 30),
-          Icon(Icons.event, size: 30),
-          Icon(Icons.settings, size: 30),
-        ],
-        onTap: (index) {
-          if (index == 0) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HealthRemindersPage()),
-            ); // Navigate to Notifications Page
-          } else if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CalendarPage()),
-            ); // Navigate to Calender Page
-          } else if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsPage()),
-            ); // Navigate to Settings Page
-          }
-        },
-      ),
-    );
-  }
-
-  Widget _buildCategory(
-      String title, IconData icon, Color color, void Function()? onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: GridTile(
-        child: Container(
-          margin: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 40, color: Colors.white),
-              const SizedBox(height: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontFamily: 'FontMain',
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

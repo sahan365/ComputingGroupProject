@@ -2,114 +2,123 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application12/calendar_page.dart';
 import 'package:flutter_application12/healthreminders_page.dart';
+import 'package:flutter_application12/home_page.dart';
 import 'package:flutter_application12/settings_page.dart';
 
-class DietAndNutritionPage extends StatelessWidget {
+void main() {
+  runApp(DietNutritionApp());
+}
+
+class DietNutritionApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Diet & Nutrition',
+      home: DietNutritionPage(),
+    );
+  }
+}
+
+class DietNutritionPage extends StatefulWidget {
+  @override
+  _DietNutritionPageState createState() => _DietNutritionPageState();
+}
+
+class _DietNutritionPageState extends State<DietNutritionPage> {
+  List<Meal> meals = [
+    Meal(name: 'Breakfast', calories: 300),
+    Meal(name: 'Lunch', calories: 500),
+    Meal(name: 'Dinner', calories: 700),
+  ];
+
+  int totalCalories() {
+    return meals.fold(0, (total, meal) => total + meal.calories);
+  }
+
+  void addMeal(String name, int calories) {
+    setState(() {
+      meals.add(Meal(name: name, calories: calories));
+    });
+  }
+
+  void deleteMeal(int index) {
+    setState(() {
+      meals.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Diet and Nutrition'),
-        titleTextStyle: const TextStyle(
-            fontFamily: 'FontMain',
-            color: Color.fromARGB(255, 172, 29, 29),
-            fontSize: 20,
-            fontWeight: FontWeight.bold),
+        backgroundColor: Colors.blue,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black, size: 30),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
+        title: Text(
+          'Diet & Nutrition',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Cover image
-            Container(
-              height: 300, // Adjust height
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/diet.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'Total Calories: ${totalCalories()}',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Diet and Nutrition content
-                  Text(
-                    'Food Diary',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: meals.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 4,
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: ListTile(
+                    title: Text(
+                      meals[index].name,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    subtitle: Text(
+                      '${meals[index].calories} calories',
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic, color: Colors.grey[700]),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete, color: Colors.red),
+                      onPressed: () => deleteMeal(index),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Icon(Icons.book, color: Colors.blue),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          'Log your meals and track your dietary intake with a food diary.',
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Barcode Scanner',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Icon(Icons.qr_code_scanner, color: Colors.green),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          'Use a barcode scanner to get nutritional information by scanning food products.',
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Meal Plans and Recipes',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orange,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Icon(Icons.restaurant_menu, color: Colors.orange),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          'Receive personalized meal plans and discover recipes tailored to your dietary preferences.',
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddMealDialog(context);
+        },
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        child: Icon(Icons.add, color: Colors.white),
       ),
       bottomNavigationBar: CurvedNavigationBar(
         // Replace BottomAppBar with CurvedNavigationBar
-        backgroundColor:
-            Color.fromARGB(255, 207, 190, 210), // Change bottom app bar color
+        backgroundColor: Colors.white, // Change bottom app bar color
         color: Colors.blue, // Change the background color of the bar items
         buttonBackgroundColor: const Color.fromARGB(
             251, 157, 172, 185), // Change the background color of the buttons
@@ -140,4 +149,81 @@ class DietAndNutritionPage extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> _showAddMealDialog(BuildContext context) async {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController caloriesController = TextEditingController();
+
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Add Meal',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: 'Meal Name',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: caloriesController,
+                decoration: InputDecoration(
+                  labelText: 'Calories',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Cancel',
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.secondary),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (nameController.text.isNotEmpty &&
+                    caloriesController.text.isNotEmpty) {
+                  addMeal(
+                      nameController.text, int.parse(caloriesController.text));
+                  Navigator.of(context).pop();
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).colorScheme.secondary),
+              child: Text(
+                'Add',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class Meal {
+  final String name;
+  final int calories;
+
+  Meal({
+    required this.name,
+    required this.calories,
+  });
 }
