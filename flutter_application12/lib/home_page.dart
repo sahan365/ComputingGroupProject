@@ -193,7 +193,10 @@ class HomePage extends StatelessWidget {
                     crossAxisCount: 3,
                     shrinkWrap: true,
                     children: [
-                      
+                      _buildCategory('Dashboard', Icons.dashboard, Colors.blue,
+                        () {
+                      // Navigate to Dashboard Page
+                    }),
                       _buildCategory(
                           'Health Data Tracking', Icons.timeline, Colors.green,
                           () {

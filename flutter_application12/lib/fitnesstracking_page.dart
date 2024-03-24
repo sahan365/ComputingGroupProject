@@ -6,9 +6,6 @@ import 'package:flutter_application12/healthreminders_page.dart';
 import 'package:flutter_application12/settings_page.dart';
 import 'package:sensors/sensors.dart';
 
-void main() {
-  runApp(FitnessTrackingApp());
-}
 
 class FitnessTrackingApp extends StatelessWidget {
   @override

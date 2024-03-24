@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_application12/admin/add_doctor.dart';
 import 'package:flutter_application12/admin/login_page_admin.dart';
 
 class DoctorDashboard extends StatelessWidget {
@@ -9,7 +7,7 @@ class DoctorDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Admin Dashboard'),
+        title: const Text('Doctor Dashboard'),
         titleTextStyle: const TextStyle(
           fontFamily: 'FontMain',
           color: Color.fromARGB(255, 199, 164, 106),

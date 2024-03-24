@@ -1,24 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application12/admin/connection.dart';
 
-const String TODO_COLLECTION_REF = "todos";
 const String DOCTORLOG_COLLECTION_REF = "doctorlog";
 const String ADMINLOG_COLLECTION_REF = "adminlog";
 
 class DatabaseService {
   final _firestore = FirebaseFirestore.instance;
 
-  late final CollectionReference _todosRef;
   late final CollectionReference _doctorlogRef1;
   late final CollectionReference _doctorlogRef2;
   late final CollectionReference _adminlogRef;
 
   DatabaseService() {
-    _todosRef = _firestore.collection(TODO_COLLECTION_REF).withConverter<Todo>(
-        fromFirestore: (snapshots, _) => Todo.fromJson(
-              snapshots.data()!,
-            ),
-        toFirestore: (todo, _) => todo.toJson());
 
     _doctorlogRef1 = _firestore.collection(DOCTORLOG_COLLECTION_REF).withConverter<DoctorLog>(
         fromFirestore: (snapshots, _) => DoctorLog.fromJson(
@@ -74,9 +67,6 @@ class DatabaseService {
   }
 
   //get
-  Stream<QuerySnapshot> getTodos() {
-    return _todosRef.snapshots();
-  }
 
    Stream<QuerySnapshot> getDoctorLogs1() {
     return _doctorlogRef1.snapshots();
@@ -84,20 +74,9 @@ class DatabaseService {
   //get
   
 
-  void addTodo(Todo todo) async {
-    _todosRef.add(todo);
-  }
 
   void AddDoctor(DoctorLog doctorLog) async {
     _doctorlogRef1.add(doctorLog);
-  }
-
-  void updateTodo(String todoId, Todo todo) {
-    _todosRef.doc(todoId).update(todo.toJson());
-  }
-
-  void deleteTodo(String todoId) {
-    _todosRef.doc(todoId).delete();
   }
 
   void deleteDoctor(String doctorId) {
@@ -108,6 +87,4 @@ class DatabaseService {
   void updateDoctor(String doctorId, DoctorLog updatedDoctor) {
     _doctorlogRef1.doc(doctorId).update(updatedDoctor.toJson());
   }
-
-
 }
